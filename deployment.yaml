@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-echo-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: http-echo
+  template:
+    metadata:
+      labels:
+        app: http-echo
+    spec:
+      serviceAccountName: http-echo-sa
+      containers:
+      - name: http-echo-container
+        image: mendhak/http-https-echo:31
+        ports:
+        - containerPort: 8080
+        env:
+        - name: CONFIG_SAMPLE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: http-echo-config
+              key: sample-key
+        - name: SECRET_SAMPLE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: http-echo-secret
+              key: secret-key
+

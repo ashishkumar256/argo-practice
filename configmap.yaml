@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: http-echo-config
+data:
+  sample-key: "sample-value"
+
